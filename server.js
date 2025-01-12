@@ -145,6 +145,19 @@ const shoes = [
 
 app.get("/shoes", (req, res) => {
   let filteredShoes = shoes;
+  const minPrice = req.query["min-price"];
+  const maxPrice = req.query["max-price"];
+  const type = req.query["type"];
+  if (minPrice !== undefined) {
+    filteredShoes = filteredShoes.filter((shoe) => shoe.price >= minPrice);
+  }
+  if (maxPrice !== undefined) {
+    filteredShoes = filteredShoes.filter((shoe) => shoe.price <= maxPrice);
+  }
+  if (type !== undefined) {
+    filteredShoes = filteredShoes.filter((shoe) => shoe.type === type);
+  }
+  res.send(filteredShoes);
 });
 
 let PORT = 3000;
